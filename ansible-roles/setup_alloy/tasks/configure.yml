@@ -1,0 +1,9 @@
+---
+- name: Templating Configuration File
+  tags:
+    - alloy_config_file
+  ansible.builtin.template:
+    src: "{{ alloy_config_alloy_template }}"
+    dest: "/etc/alloy/config.alloy"
+    mode: "0644"
+  notify: Reload alloy.service

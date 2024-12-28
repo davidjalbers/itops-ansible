@@ -1,0 +1,34 @@
+---
+- name: Adding APT Key for Grafana
+  ansible.builtin.get_url:
+    url: "https://apt.grafana.com/gpg.key"
+    dest: "/etc/apt/keyrings/grafana.asc"
+    mode: "0644"
+
+- name: Adding APT Repository for Grafana
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/grafana.asc]  https://apt.grafana.com stable main"
+    filename: "grafana"
+    state: present
+
+- name: Installing Alloy
+  ansible.builtin.apt:
+    package:
+      - alloy
+    state: present
+    update_cache: yes
+
+- name: Adding alloy User to adm, systemd-journal and docker Groups
+  ansible.builtin.user:
+    name: alloy
+    groups: 
+      - adm
+      - systemd-journal
+      - docker # required for accessing docker logs via socket. TODO: what if docker is not installed and the group does not exist?
+    append: yes
+
+- name: Enabling and Starting Alloy Service
+  ansible.builtin.systemd_service:
+    name: alloy.service
+    enabled: yes
+    state: started
