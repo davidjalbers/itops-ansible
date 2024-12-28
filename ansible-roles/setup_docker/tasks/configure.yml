@@ -1,0 +1,14 @@
+---
+- name: Templating daemon.json Configuration File
+  ansible.builtin.template:
+    src: "{{ docker_daemon_json_template }}"
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart docker.service
+
+- name: Creating /opt/stacks for Compose Deployments
+  ansible.builtin.file:
+    name: "/opt/stacks"
+    state: directory

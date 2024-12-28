@@ -1,0 +1,1 @@
+docker_daemon_json_template: daemon.default.j2.json
