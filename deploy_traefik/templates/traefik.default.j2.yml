@@ -1,0 +1,65 @@
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    asDefault: true
+    address: ":443"
+    http:
+      tls:
+        certResolver: leProductionResolver
+        domains:
+{% for domain in traefik_domains | default([]) %}
+          - main: "{{ domain }}"
+            sans:
+              - "*.{{ domain }}"
+{% endfor %}
+{% if b_traefik_configure_metrics %}
+  metrics:
+    address: ":{{ traefik_metrics_port }}"
+{% endif %}
+
+providers:
+  file:
+    directory: "/etc/traefik/conf.d"
+  docker:
+    exposedByDefault: false
+    network: "{{ traefik_network_name }}"
+
+certificatesResolvers:
+  leProductionResolver:
+    acme:
+      email: "{{ traefik_letsencrypt_email }}"
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      storage: "/letsencrypt/acme-production.json"
+      dnsChallenge:
+        provider: cloudflare
+  leStagingResolver:
+    acme:
+      email: "{{ traefik_letsencrypt_email }}"
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      storage: "/letsencrypt/acme-staging.json"
+      dnsChallenge:
+        provider: cloudflare
+
+{% if b_traefik_configure_metrics %}
+metrics:
+  prometheus:
+    entryPoint: metrics
+{% endif %}
+
+{% if b_traefik_configure_dashboard %}
+api:
+  dashboard: true
+{% endif %}
+
+accessLog:
+  format: "json"
+
+log:
+  level: "INFO"
+  format: "json"

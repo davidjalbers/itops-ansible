@@ -1,0 +1,29 @@
+---
+- name: Creating Deployment Directory
+  ansible.builtin.file:
+    name: "/opt/stacks/traefik"
+    state: directory
+
+- name: Templating compose.yaml
+  ansible.builtin.template:
+    src: "{{ traefik_compose_yaml_template }}"
+    dest: "/opt/stacks/traefik/compose.yaml"
+  tags:
+    - traefik_compose_yaml
+
+- name: Templating Static Configuration File
+  ansible.builtin.template:
+    src: "{{ traefik_traefik_yml_template }}"
+    dest: "/opt/stacks/traefik/traefik.yml"
+  tags:
+    - traefik_traefik_yml
+
+- name: Creating Dynamic Configuration Directory
+  ansible.builtin.file:
+    name: "/opt/stacks/traefik/conf.d"
+    state: directory
+
+- name: Starting Traefik
+  ansible.builtin.command:
+    chdir: "/opt/stacks/traefik"
+    cmd: "docker compose up -d"

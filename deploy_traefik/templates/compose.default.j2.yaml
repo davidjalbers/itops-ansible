@@ -1,0 +1,27 @@
+---
+services:
+  proxy:
+    image: traefik:v{{ traefik_version }}
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+{% if b_traefik_configure_metrics %}
+      - "{{ traefik_metrics_port }}:{{ traefik_metrics_port }}"
+{% endif %}
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" # Access Docker socket for service discovery
+      - "letsencrypt:/letsencrypt"
+      - "/opt/stacks/traefik/traefik.yml:/etc/traefik/traefik.yml:ro" # static configuration
+      - "/opt/stacks/traefik/conf.d:/etc/traefik/conf.d:ro" # dynamic configuration
+    networks:
+      - "{{ traefik_network_name }}"
+    environment:
+      - "CF_DNS_API_TOKEN={{ traefik_cloudflare_api_token }}"
+
+networks:
+  "{{ traefik_network_name }}":
+    name: "{{ traefik_network_name }}"
+
+volumes:
+  letsencrypt:
