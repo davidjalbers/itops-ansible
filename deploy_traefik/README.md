@@ -30,7 +30,7 @@ This role deploys the Traefik reverse proxy as a Docker Compose stack.
 
     # Prometheus metrics configuration
     b_traefik_configure_metrics: true
-    # Optional. Defaults to 9080 and is only used if b_traefik_configure_metrics is true
+    # Optional. Defaults to 9090 and is only used if b_traefik_configure_metrics is true
     traefik_metrics_port: "<desired port>"
 
     # If true, only enables the dashboard service in the static configuration.
