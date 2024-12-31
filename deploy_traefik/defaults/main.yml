@@ -4,8 +4,6 @@ traefik_version: "3.2.3"
 traefik_compose_yaml_template: compose.default.j2.yaml
 traefik_traefik_yml_template: traefik.default.j2.yml
 
-traefik_network_name: "traefik_public_network"
-
 # Only enables the dashboard in the static config.
 # You still need to configure a router to access it.
 b_traefik_configure_dashboard: false
