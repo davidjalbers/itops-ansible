@@ -12,16 +12,16 @@ entryPoints:
     http:
       tls:
         certResolver: leProductionResolver
-          domains:
+        domains:
 {% for entry in traefik_domains | default([]) %}
 {% if entry is string %}
-            - main: "{{ entry }}"
+          - main: "{{ entry }}"
 {% else %}
-            - main: "{{ entry.domain }}"
+          - main: "{{ entry.domain }}"
 {% set b_wildcard = entry.b_wildcard | default(false) %}
 {% if b_wildcard %}
-              sans:
-                - "*.{{ entry.domain }}"
+            sans:
+              - "*.{{ entry.domain }}"
 {% endif %}
 {% endif %}
 {% endfor %}
