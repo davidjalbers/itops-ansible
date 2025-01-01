@@ -22,9 +22,15 @@ This role deploys the Traefik reverse proxy as a Docker Compose stack.
     # Required. Docker network to create for Traefik and service containers
     traefik_network_name: "traefik_public_network"
 
-    # Required. SSL configuration (will create a wildcard certificate for all domains listed)
+    # Required. Configuration for automatic Let's Encrypt certificate generation with DNS-01 challenge
     traefik_domains:
-      - "demo-server.example.com"
+      # This will obtain a cert for demo-server.example.com and *.demo-server.example.com 
+      - domain: "demo-server.example.com"
+        b_wildcard: true
+      # This will obtain a cert for myapp-production.example.com
+      - domain: "myapp-production.example.com"
+      # If you don't need further config, this shorthand will also obtain a cert for accounts.example.com
+      - "accounts.example.com"
     traefik_letsencrypt_email: "letsencrypt@example.com"
     traefik_cloudflare_api_token: "{{ lookup('env', 'TRAEFIK_CLOUDFLARE_API_TOKEN') }}"
 
