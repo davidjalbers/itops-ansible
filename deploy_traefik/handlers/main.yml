@@ -1,0 +1,10 @@
+---
+- name: Up traefik
+  ansible.builtin.command:
+    chdir: "{{ deployment_dir }}"
+    cmd: "docker compose up -d"
+
+- name: Recreate traefik
+  ansible.builtin.command:
+    chdir: "{{ deployment_dir }}"
+    cmd: "docker compose up -d --force-recreate"

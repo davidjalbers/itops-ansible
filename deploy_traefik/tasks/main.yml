@@ -10,13 +10,16 @@
     dest: "{{ deployment_dir }}/compose.yaml"
   tags:
     - traefik_compose_yaml
+  notify: Up traefik
 
 - name: Templating .env
   ansible.builtin.template:
     src: "traefik-env.j2"
     dest: "{{ deployment_dir }}/.env"
     mode: 0600
-  register: env_template
+  tags:
+    - traefik_traefik_yml
+  notify: Recreate traefik
 
 - name: Templating Static Configuration File
   ansible.builtin.template:
@@ -24,14 +27,9 @@
     dest: "{{ deployment_dir }}/traefik.yml"
   tags:
     - traefik_traefik_yml
-  register: traefik_yml_template
+  notify: Recreate traefik
 
 - name: Creating Dynamic Configuration Directory
   ansible.builtin.file:
     name: "{{ deployment_dir }}/conf.d"
     state: directory
-
-- name: (Re-)Starting Traefik
-  ansible.builtin.command:
-    chdir: "{{ deployment_dir }}/traefik"
-    cmd: "docker compose up -d {% if env_template.changed or traefik_yml_template.changed %} --force-recreate{% endif %}"
