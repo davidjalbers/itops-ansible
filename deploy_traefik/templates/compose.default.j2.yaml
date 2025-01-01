@@ -16,8 +16,8 @@ services:
       - "/opt/stacks/traefik/conf.d:/etc/traefik/conf.d:ro" # dynamic configuration
     networks:
       - "{{ traefik_network_name }}"
-    environment:
-      - "CF_DNS_API_TOKEN={{ traefik_cloudflare_api_token }}"
+    env_file:
+      - .env
 
 networks:
   "{{ traefik_network_name }}":

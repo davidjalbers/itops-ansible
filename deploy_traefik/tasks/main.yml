@@ -11,6 +11,12 @@
   tags:
     - traefik_compose_yaml
 
+- name: Templating .env
+  ansible.builtin.template:
+    src: "traefik-env.j2"
+    dest: "/opt/stacks/traefik/.env"
+    mode: 0600
+
 - name: Templating Static Configuration File
   ansible.builtin.template:
     src: "{{ traefik_traefik_yml_template }}"
