@@ -59,6 +59,40 @@ api:
 
 accessLog:
   format: "json"
+  fields:
+    defaultMode: drop
+    names:
+      # General info
+      StartUTC: keep
+      Duration: keep
+      RetryAttempts: keep
+      TLSVersion: keep
+      TLSCipher: keep
+      RouterName: keep # Traefik router that handled the request
+      ServiceName: keep # Traefik service that handled the request
+      ServiceURL: keep
+      # Request info (client)
+      ClientAddr: keep
+      RequestAddr: keep
+      RequestMethod: keep
+      RequestPath: keep
+      RequestProtocol: keep
+      RequestContentSize: keep
+      # Processing info (what was returned by origin / upstream server to Traefik)
+      OriginDuration: keep
+      OriginStatus: keep
+      OriginContentSize: keep
+      # Response info (what was returned to client by Traefik)
+      DownstreamStatus: keep
+      DownstreamContentSize: keep
+    headers:
+      names:
+        User-Agent: keep
+        Content-Type: keep
+        # Forwarding headers
+        X-Forwarded-For: keep
+        X-Real-IP: keep
+        CF-Connecting-IP: keep
 
 log:
   level: "INFO"
