@@ -14,7 +14,7 @@ This role installs Grafana Alloy on Ubuntu 24.04.
 
         # Optional, enables metric scraping from Traefik. Defaults to false
         b_alloy_configure_traefik_metrics: true
-        # Optional, defaults to localhost:8080 and is only used if b_alloy_configure_traefik_metrics is true
+        # Optional, defaults to localhost:9090 and is only used if b_alloy_configure_traefik_metrics is true
         alloy_traefik_metrics_endpoint: "<desired endpoint>"
 
         # Optional, enables log scraping from Docker. Defaults to false
