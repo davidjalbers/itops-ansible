@@ -9,11 +9,16 @@ x-proxytrust: &proxytrust
   {}
 {% endif %}
 
+x-middlewares: &middlewares
+  middlewares:
+    {{ "- whitelist@file" if traefik_whitelist_cidrs is defined }}
+
 entryPoints:
   web:
     <<: *proxytrust
     address: ":80"
     http:
+      <<: *middlewares
       redirections:
         entryPoint:
           to: websecure
@@ -23,6 +28,7 @@ entryPoints:
     asDefault: true
     address: ":443"
     http:
+      <<: *middlewares
       tls:
         certResolver: leProductionResolver
         domains:

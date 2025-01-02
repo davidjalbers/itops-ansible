@@ -1,0 +1,8 @@
+http:
+  middlewares:
+    whitelist:
+      ipAllowList:
+        sourceRange:
+{% for cidr in traefik_whitelist_cidrs %}
+          - "{{ cidr }}"
+{% endfor %}

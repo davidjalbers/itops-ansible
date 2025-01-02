@@ -47,4 +47,9 @@ This role deploys the Traefik reverse proxy as a Docker Compose stack.
     traefik_trusted_cidrs:
       - "172.45.0.0/16"
       - "2a00:1388:5000:120::/64"
+
+    # Optional. A list of CIDRs to use as whitelist for the 80 and 443 entrypoints. If set, all other IPs will be denied.
+    traefik_whitelist_cidrs:
+      - "172.45.0.0/16"
+      - "2a00:1388:5000:120::/64"
 ```
