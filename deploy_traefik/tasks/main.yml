@@ -39,3 +39,8 @@
     src: "middleware-whitelist.j2.yml"
     dest: "/opt/stacks/traefik/conf.d/middleware-whitelist.yml"
   when: traefik_whitelist_cidrs is defined
+
+- name: Creating Traefik Network
+  community.docker.docker_network:
+    name: "{{ traefik_network_name }}"
+    state: present

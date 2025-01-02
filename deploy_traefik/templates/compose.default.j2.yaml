@@ -12,9 +12,5 @@ services:
     env_file:
       - .env
 
-networks:
-  "{{ traefik_network_name }}":
-    name: "{{ traefik_network_name }}"
-
 volumes:
   letsencrypt:
