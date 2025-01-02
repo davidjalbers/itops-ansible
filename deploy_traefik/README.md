@@ -42,4 +42,9 @@ This role deploys the Traefik reverse proxy as a Docker Compose stack.
     # If true, only enables the dashboard service in the static configuration.
     # You still need to configure a router for it, e.g. with a file in the dynamic configuration directory (/opt/stacks/traefik/conf.d).
     b_traefik_configure_dashboard: true
+
+    # Optional. A list of CIDRs to trust as proxies, from which X-Forwarded-For and X-Real-IP headers are accepted.
+    traefik_trusted_cidrs:
+      - "172.45.0.0/16"
+      - "2a00:1388:5000:120::/64"
 ```

@@ -1,5 +1,17 @@
+x-proxytrust: &proxytrust
+{% if traefik_trusted_cidrs is defined %}
+  forwardedHeaders:
+    trustedIPs:
+{% for cidr in traefik_trusted_cidrs %}
+      - "{{ cidr }}"
+{% endfor %}
+{% else %}
+  {}
+{% endif %}
+
 entryPoints:
   web:
+    <<: *proxytrust
     address: ":80"
     http:
       redirections:
@@ -7,6 +19,7 @@ entryPoints:
           to: websecure
           scheme: https
   websecure:
+    <<: *proxytrust
     asDefault: true
     address: ":443"
     http:
@@ -27,6 +40,7 @@ entryPoints:
 {% endfor %}
 {% if b_traefik_configure_metrics %}
   metrics:
+    <<: *proxytrust
     address: ":{{ traefik_metrics_port }}"
 {% endif %}
 
