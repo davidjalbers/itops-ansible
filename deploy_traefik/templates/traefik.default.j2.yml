@@ -47,7 +47,7 @@ entryPoints:
 {% if b_traefik_configure_metrics %}
   metrics:
     <<: *proxytrust
-    address: ":{{ traefik_metrics_port }}"
+    address: "127.0.0.1:{{ traefik_metrics_port }}"
 {% endif %}
 
 providers:
