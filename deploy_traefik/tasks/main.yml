@@ -40,6 +40,12 @@
     dest: "/opt/stacks/traefik/conf.d/middleware-whitelist.yml"
   when: traefik_whitelist_cidrs is defined
 
+- name: Removing middleware-whitelist.yml
+  ansible.builtin.file:
+    dest: "/opt/stacks/traefik/conf.d/middleware-whitelist.yml"
+    state: absent
+  when: traefik_whitelist_cidrs is not defined
+
 - name: Creating Traefik Network
   community.docker.docker_network:
     name: "{{ traefik_network_name }}"
