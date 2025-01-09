@@ -4,5 +4,9 @@
 # settings.
 PORT="41641"
 
+{% if b_tailscale_enable_userspace_networking %}
 # Extra flags you might want to pass to tailscaled.
 FLAGS="--tun=userspace-networking"
+{% else %}
+FLAGS=""
+{% endif %}

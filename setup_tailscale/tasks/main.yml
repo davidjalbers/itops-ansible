@@ -11,8 +11,8 @@
     filename: "tailscale"
     state: present
 
-- name: Copying Service Environment File
-  ansible.builtin.copy:
+- name: Templating Service Environment File
+  ansible.builtin.template:
     src: "tailscaled.service.env"
     dest: "/etc/default/tailscaled"
     mode: "0644"
