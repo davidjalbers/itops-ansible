@@ -1,0 +1,38 @@
+---
+- name: Updating Package Lists
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Installing Prerequisites
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+
+- name: Adding APT Key for MongoDB
+  ansible.builtin.get_url:
+    url: "https://www.mongodb.org/static/pgp/server-8.0.asc"
+    dest: "/etc/apt/keyrings/mongodb-8.0.asc"
+    mode: "0644"
+
+- name: Adding APT Repository for MongoDB
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/mongodb-8.0.asc] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/8.0 multiverse"
+    filename: "mongodb-8.0"
+    state: present
+
+- name: Installing MongoDB
+  ansible.builtin.apt:
+    package:
+      - mongodb-org
+    state: present
+    update_cache: yes
+
+- name: Enabling and Starting mongod.service
+  ansible.builtin.systemd:
+    name: mongod
+    state: started
+    enabled: yes
+    
