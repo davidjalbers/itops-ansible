@@ -1,11 +1,9 @@
 ---
-alloy_config_alloy_template: config.default.j2.alloy
+alloy_config_alloy_template: config.alloy.j2
 
-b_alloy_configure_traefik_metrics: false
-alloy_traefik_metrics_endpoint: "localhost:9090"
+alloy_prometheus_remote_write_url: ""
+alloy_loki_push_url: ""
+alloy_basicauth_username: ""
+alloy_basicauth_password: ""
 
-# If set to true, requires the docker group to be present on the target systems
-b_alloy_configure_docker_logs: false
-
-# If set to true, requires the xproject_name, xproject_namespace, and xproject_environment variables to be defined
-b_alloy_configure_xproject_labels: false
+alloy_scrape_targets: []

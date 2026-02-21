@@ -18,20 +18,14 @@
     state: present
     update_cache: yes
 
-- name: Adding alloy User to adm and systemd-journal Groups
+- name: Adding alloy User to adm, systemd-journal, and docker Groups
   ansible.builtin.user:
     name: alloy
-    groups: 
+    groups:
       - adm
       - systemd-journal
+      - docker
     append: yes
-
-- name: Adding alloy User to docker Group
-  ansible.builtin.user:
-    name: alloy
-    groups: docker
-    append: yes
-  when: b_alloy_configure_docker_logs
 
 - name: Enabling and (Re-)Starting Alloy Service
   ansible.builtin.systemd_service:
