@@ -6,4 +6,6 @@ alloy_loki_push_url: ""
 alloy_basicauth_username: ""
 alloy_basicauth_password: ""
 
+alloy_project: ""
+
 alloy_scrape_targets: []

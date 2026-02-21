@@ -83,6 +83,11 @@ prometheus.relabel "instance" {
     target_label = "instance"
     replacement  = constants.hostname
   }
+
+  rule {
+    target_label = "project"
+    replacement  = "{{ alloy_project }}"
+  }
 }
 
 loki.relabel "instance" {
@@ -91,6 +96,11 @@ loki.relabel "instance" {
   rule {
     target_label = "instance"
     replacement  = constants.hostname
+  }
+
+  rule {
+    target_label = "project"
+    replacement  = "{{ alloy_project }}"
   }
 }
 
