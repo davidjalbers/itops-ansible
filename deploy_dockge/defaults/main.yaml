@@ -1,5 +1,0 @@
----
-dockge_version: "1.4.2"
-
-# If true, requires dockge_traefik_host and dockge_traefik_network_name to be defined
-b_dockge_add_traefik_configuration: true
